@@ -110,7 +110,7 @@ function parseIdentify(input) {
 
   for (i in lines) {
     currentLine = lines[i];
-    indent = currentLine.search(/\S/);
+    indent = typeof currentLine.search === 'function' ? indent = currentLine.search(/\S/) : -1;
     if (indent >= 0) {
       comps = currentLine.split(': ');
       if (indent > prevIndent) indents.push(indent);
@@ -280,7 +280,7 @@ exports.crop = function (options, callback) {
     throw new TypeError("No srcPath or data defined");
   if (!options.height && !options.width)
     throw new TypeError("No width or height defined");
-  
+
   if (options.srcPath){
     var args = options.srcPath;
   } else {
